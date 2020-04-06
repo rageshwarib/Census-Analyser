@@ -34,6 +34,7 @@ public class CensusAnalyserTest {
     }
     @Test
     public void givenIndiaCensusData_WithWrongFileType_ShouldThrowException() {
+
         try {
             CensusAnalyser censusAnalyser = new CensusAnalyser();
             ExpectedException exceptionRule = ExpectedException.none();

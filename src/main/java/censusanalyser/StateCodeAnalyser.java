@@ -1,7 +1,5 @@
 package censusanalyser;
 
-import censusanalyser.IndiaStateCensusCSV;
-import censusanalyser.IndiaStateCensusException;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 
@@ -13,7 +11,11 @@ import java.util.Iterator;
 import java.util.stream.StreamSupport;
 
 public class StateCodeAnalyser {
-    public static int loadIndiaStateCensusData(String indiaStateCodeCsvFilePath) throws IndiaStateCensusException {
+
+    public int loadIndiaStateCensusData(String indiaStateCodeCsvFilePath) throws StateCodeException {
+            if( !indiaStateCodeCsvFilePath.contains(".csv")) {
+                throw new StateCodeException("Invalid file type", StateCodeException.ExceptionType.INVALID_FILE_TYPE);
+            }
         try {
             Reader reader = Files.newBufferedReader(Paths.get(indiaStateCodeCsvFilePath));
             CsvToBeanBuilder<IndiaStateCensusCSV> csvToBeanBuilder = new CsvToBeanBuilder<>(reader);
@@ -30,8 +32,8 @@ public class StateCodeAnalyser {
             namOfEateries = (int) StreamSupport.stream(indiaStateCodeCSVSIterable.spliterator(), false).count();
             return namOfEateries;
         } catch (IOException e) {
-            throw new IndiaStateCensusException(e.getMessage(),
-                    IndiaStateCensusException.ExceptionType.CENSUS_FILE_PROBLEM);
+            throw new StateCodeException(e.getMessage(),
+                    StateCodeException.ExceptionType.CENSUS_FILE_PROBLEM);
         }
     }
 
