@@ -35,6 +35,10 @@ public class StateCodeAnalyser {
             throw new StateCodeAnalyserException(e.getMessage(),
                     StateCodeAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM);
         }catch (RuntimeException e) {
+            if (e.getMessage().contains("header!"))
+                throw new StateCodeAnalyserException(e.getMessage(),
+                        StateCodeAnalyserException.ExceptionType.INVALID_FILE_HEADER);
+
             throw new StateCodeAnalyserException(e.getMessage(),
                     StateCodeAnalyserException.ExceptionType.INVALID_FILE_DATA);
         }

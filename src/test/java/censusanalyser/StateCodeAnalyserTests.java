@@ -9,6 +9,7 @@ public class StateCodeAnalyserTests {
     private static final String WRONG_CSV_FILE_PATH = "./src/test/resources/IndiaStateCode.csv";
     private static final String WRONG_CSV_FILE_TYPE = "./src/test/resources/IndiaStateCode.txt";
     private static final String WRONG_CSV_FILE_DELIMITER = "./src/test/resources/StateCodeInvalidDelimiter.csv";
+    private static final String WRONG_CSV_FILE_HEADER = "./src/test/resources/CensusInvalidHeader.csv";
 
     StateCodeAnalyser stateCodeAnalyser = new StateCodeAnalyser();
     @Test
@@ -46,6 +47,16 @@ public class StateCodeAnalyserTests {
             stateCodeAnalyser.loadIndiaStateCensusData(WRONG_CSV_FILE_DELIMITER);
         } catch (StateCodeAnalyserException e) {
             Assert.assertEquals(StateCodeAnalyserException.ExceptionType.INVALID_FILE_DATA,e.type);
+        }
+    }
+    @Test
+    public void givenIndiaStateCodeData_WithWrongHeader_ShouldThrowException() {
+        try {
+            ExpectedException exceptionRule = ExpectedException.none();
+            exceptionRule.expect(StateCodeAnalyserException.class);
+            stateCodeAnalyser.loadIndiaStateCensusData(WRONG_CSV_FILE_HEADER);
+        } catch (StateCodeAnalyserException e) {
+            Assert.assertEquals(StateCodeAnalyserException.ExceptionType.INVALID_FILE_HEADER,e.type);
         }
     }
 }

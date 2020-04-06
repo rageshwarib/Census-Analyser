@@ -6,7 +6,8 @@ public class StateCodeAnalyserException extends Exception{
 
         CENSUS_FILE_PROBLEM ,
         INVALID_FILE_TYPE ,
-        INVALID_FILE_DATA ;
+        INVALID_FILE_DATA ,
+        INVALID_FILE_HEADER ;
     }
     ExceptionType type;
 
