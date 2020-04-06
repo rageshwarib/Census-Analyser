@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="censusanalyser.StateCodeAnalyserTests" tests="3" skipped="0" failures="0" errors="0" timestamp="2020-04-06T16:50:25" hostname="rageshwari" time="0.454">
+<testsuite name="censusanalyser.StateCodeAnalyserTests" tests="4" skipped="0" failures="0" errors="0" timestamp="2020-04-06T17:00:29" hostname="rageshwari" time="0.46">
   <properties/>
-  <testcase name="givenIndiaStateCodeData_WithWrongFileType_ShouldThrowException" classname="censusanalyser.StateCodeAnalyserTests" time="0.021"/>
-  <testcase name="givenIndiaStateData_WithWrongFile_ShouldThrowException" classname="censusanalyser.StateCodeAnalyserTests" time="0.354"/>
-  <testcase name="givenIndianStateCodeCSVFileReturnsCorrectRecords" classname="censusanalyser.StateCodeAnalyserTests" time="0.077"/>
+  <testcase name="givenIndiaStateCodeData_WithWrongFileType_ShouldThrowException" classname="censusanalyser.StateCodeAnalyserTests" time="0.039"/>
+  <testcase name="givenIndiaStateCodeData_WithWrongDelimiter_ShouldThrowException" classname="censusanalyser.StateCodeAnalyserTests" time="0.073"/>
+  <testcase name="givenIndiaStateData_WithWrongFile_ShouldThrowException" classname="censusanalyser.StateCodeAnalyserTests" time="0.251"/>
+  <testcase name="givenIndianStateCodeCSVFileReturnsCorrectRecords" classname="censusanalyser.StateCodeAnalyserTests" time="0.096"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

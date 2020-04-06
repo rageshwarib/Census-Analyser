@@ -12,9 +12,9 @@ import java.util.stream.StreamSupport;
 
 public class StateCodeAnalyser {
 
-    public int loadIndiaStateCensusData(String indiaStateCodeCsvFilePath) throws StateCodeException {
+    public int loadIndiaStateCensusData(String indiaStateCodeCsvFilePath) throws StateCodeAnalyserException {
             if( !indiaStateCodeCsvFilePath.contains(".csv")) {
-                throw new StateCodeException("Invalid file type", StateCodeException.ExceptionType.INVALID_FILE_TYPE);
+                throw new StateCodeAnalyserException("Invalid file type", StateCodeAnalyserException.ExceptionType.INVALID_FILE_TYPE);
             }
         try {
             Reader reader = Files.newBufferedReader(Paths.get(indiaStateCodeCsvFilePath));
@@ -32,9 +32,13 @@ public class StateCodeAnalyser {
             namOfEateries = (int) StreamSupport.stream(indiaStateCodeCSVSIterable.spliterator(), false).count();
             return namOfEateries;
         } catch (IOException e) {
-            throw new StateCodeException(e.getMessage(),
-                    StateCodeException.ExceptionType.CENSUS_FILE_PROBLEM);
+            throw new StateCodeAnalyserException(e.getMessage(),
+                    StateCodeAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM);
+        }catch (RuntimeException e) {
+            throw new StateCodeAnalyserException(e.getMessage(),
+                    StateCodeAnalyserException.ExceptionType.INVALID_FILE_DATA);
         }
+
     }
 
 }
