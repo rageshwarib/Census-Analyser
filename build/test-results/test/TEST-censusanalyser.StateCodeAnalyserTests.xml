@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="censusanalyser.StateCodeAnalyserTests" tests="5" skipped="0" failures="0" errors="0" timestamp="2020-04-07T11:01:33" hostname="rageshwari" time="0.154">
+<testsuite name="censusanalyser.StateCodeAnalyserTests" tests="5" skipped="0" failures="0" errors="0" timestamp="2020-04-07T12:15:51" hostname="rageshwari" time="0.138">
   <properties/>
-  <testcase name="givenIndiaStateCodeData_WithWrongFileType_ShouldThrowException" classname="censusanalyser.StateCodeAnalyserTests" time="0.002"/>
-  <testcase name="givenIndiaStateCodeData_WithWrongDelimiter_ShouldThrowException" classname="censusanalyser.StateCodeAnalyserTests" time="0.015"/>
-  <testcase name="givenIndiaStateData_WithWrongFile_ShouldThrowException" classname="censusanalyser.StateCodeAnalyserTests" time="0.088"/>
-  <testcase name="givenIndianStateCodeCSVFileReturnsCorrectRecords" classname="censusanalyser.StateCodeAnalyserTests" time="0.037"/>
-  <testcase name="givenIndiaStateCodeData_WithWrongHeader_ShouldThrowException" classname="censusanalyser.StateCodeAnalyserTests" time="0.005"/>
+  <testcase name="givenIndiaStateCodeData_WithWrongFileType_ShouldThrowException" classname="censusanalyser.StateCodeAnalyserTests" time="0.003"/>
+  <testcase name="givenIndiaStateCodeData_WithWrongDelimiter_ShouldThrowException" classname="censusanalyser.StateCodeAnalyserTests" time="0.008"/>
+  <testcase name="givenIndiaStateData_WithWrongFile_ShouldThrowException" classname="censusanalyser.StateCodeAnalyserTests" time="0.079"/>
+  <testcase name="givenIndianStateCodeCSVFileReturnsCorrectRecords" classname="censusanalyser.StateCodeAnalyserTests" time="0.038"/>
+  <testcase name="givenIndiaStateCodeData_WithWrongHeader_ShouldThrowException" classname="censusanalyser.StateCodeAnalyserTests" time="0.003"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

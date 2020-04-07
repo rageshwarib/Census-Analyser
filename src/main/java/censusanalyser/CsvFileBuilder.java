@@ -10,8 +10,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Iterator;
 
-public class CsvFileBuilder {
-    public static <T> Iterator getIterator(String csvFilePath , Class classFile) throws CensusAnalyserException {
+public class CsvFileBuilder implements CsvBuilderFactoryInterface{
+    public <T> Iterator getIterator(String csvFilePath, Class classFile) throws CensusAnalyserException {
         try {
             Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));
             CsvToBeanBuilder<T> csvToBeanBuilder = new CsvToBeanBuilder<>(reader);
