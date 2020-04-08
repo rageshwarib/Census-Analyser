@@ -1,11 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="censusanalyser.CensusAnalyserTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2020-04-08T06:28:44" hostname="rageshwari" time="0.684">
+<testsuite name="censusanalyser.CensusAnalyserTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2020-04-08T08:16:29" hostname="rageshwari" time="0.289">
   <properties/>
-  <testcase name="givenIndianCensusCSVFileReturnsCorrectRecords" classname="censusanalyser.CensusAnalyserTest" time="0.601"/>
-  <testcase name="givenIndiaCensusData_WithWrongDelimiter_ShouldThrowException" classname="censusanalyser.CensusAnalyserTest" time="0.043"/>
-  <testcase name="givenIndiaCensusData_WithWrongFileType_ShouldThrowException" classname="censusanalyser.CensusAnalyserTest" time="0.0"/>
-  <testcase name="givenIndiaCensusData_WithWrongHeader_ShouldThrowException" classname="censusanalyser.CensusAnalyserTest" time="0.024"/>
-  <testcase name="givenIndiaCensusData_WithWrongFile_ShouldThrowException" classname="censusanalyser.CensusAnalyserTest" time="0.013"/>
+  <testcase name="givenIndianCensusCSVFileReturnsCorrectRecords" classname="censusanalyser.CensusAnalyserTest" time="0.231"/>
+  <testcase name="givenIndiaCensusData_WithWrongDelimiter_ShouldThrowException" classname="censusanalyser.CensusAnalyserTest" time="0.038"/>
+  <testcase name="givenIndiaCensusData_WithWrongFileType_ShouldThrowException" classname="censusanalyser.CensusAnalyserTest" time="0.001"/>
+  <testcase name="givenIndiaCensusData_WithWrongHeader_ShouldThrowException" classname="censusanalyser.CensusAnalyserTest" time="0.018"/>
+  <testcase name="givenIndiaCensusData_WithWrongFile_ShouldThrowException" classname="censusanalyser.CensusAnalyserTest" time="0.001"/>
   <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
+  <system-err><![CDATA[Exception in thread "pool-2-thread-1" java.lang.RuntimeException: com.opencsv.exceptions.CsvRequiredFieldEmptyException: The following required fields were not present for one record of the input: areaInSqKm densityPerSqKm
+	at com.opencsv.bean.concurrent.ProcessCsvLine.run(ProcessCsvLine.java:91)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: com.opencsv.exceptions.CsvRequiredFieldEmptyException: The following required fields were not present for one record of the input: areaInSqKm densityPerSqKm
+	at com.opencsv.bean.HeaderColumnNameMappingStrategy.verifyLineLength(HeaderColumnNameMappingStrategy.java:148)
+	at com.opencsv.bean.concurrent.ProcessCsvLine.processLine(ProcessCsvLine.java:122)
+	at com.opencsv.bean.concurrent.ProcessCsvLine.run(ProcessCsvLine.java:82)
+	... 3 more
+]]></system-err>
 </testsuite>

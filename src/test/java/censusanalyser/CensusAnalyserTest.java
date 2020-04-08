@@ -1,5 +1,6 @@
 package censusanalyser;
 
+import com.BridgeLabz.CensusAnalyserMyException;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;

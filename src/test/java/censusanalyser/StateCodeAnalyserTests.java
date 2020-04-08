@@ -1,5 +1,6 @@
 package censusanalyser;
 
+import com.BridgeLabz.CensusAnalyserMyException;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -53,7 +54,7 @@ public class StateCodeAnalyserTests {
     public void givenIndiaStateCodeData_WithWrongHeader_ShouldThrowException() {
         try {
             ExpectedException exceptionRule = ExpectedException.none();
-            exceptionRule.expect(CensusAnalyserException.class);
+            exceptionRule.expect(CensusAnalyserMyException.class);
             censusAnalyser.loadIndiaStateCodeCensusData(WRONG_CSV_FILE_HEADER);
         } catch (CensusAnalyserException e) {
             Assert.assertEquals(CensusAnalyserException.ExceptionType.INVALID_FILE_HEADER,e.type);
