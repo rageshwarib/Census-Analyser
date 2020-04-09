@@ -1,6 +1,7 @@
 package censusanalyser;
 
 import com.BridgeLabz.CensusAnalyserMyException;
+import com.google.gson.Gson;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -60,4 +61,12 @@ public class StateCodeAnalyserTests {
             Assert.assertEquals(CensusAnalyserException.ExceptionType.INVALID_FILE_HEADER,e.type);
         }
     }
-}
+    @Test
+    public void givenIndiaCensusData_WhenSortedOnState_ShouldReturnSortResult() {
+        try {
+            String sortedCensusData = censusAnalyser.getStateWiseSortedData(INDIA_STATE_CODE_CSV_FILE_PATH);
+            IndiaCensusCSV[] indiaCensusCSV = new Gson().fromJson(sortedCensusData, IndiaCensusCSV[].class);
+            Assert.assertEquals("Andhra Pradesh", indiaCensusCSV[0].state);
+        }catch (CensusAnalyserException e){ }
+    }
+ }
