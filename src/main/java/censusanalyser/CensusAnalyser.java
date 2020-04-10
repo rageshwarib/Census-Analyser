@@ -8,17 +8,34 @@ import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 public class CensusAnalyser {
+    List<IndiaCensusCSV> censusCSVList = new ArrayList<IndiaCensusCSV>();
 
     public int loadIndiaCensusData(String csvFilePath) throws CensusAnalyserException {
-        this.checkValidCSVFile(csvFilePath);
-        this.getStateWiseSortedData(csvFilePath);
-        return 1;
+       this.checkValidCSVFile(csvFilePath);
+        try (Reader reader = Files.newBufferedReader(Paths.get(csvFilePath))) {
+            CsvBuilderFactoryInterface csvBuilder = CsvBuilderFactory.getCsvBuilder();
+
+            censusCSVList = csvBuilder.getCsvList(reader , IndiaCensusCSV.class);
+            return censusCSVList.size();
+        }catch (IOException e){
+            throw new CensusAnalyserException(e.getMessage(), CensusAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM);
+        }catch (CensusAnalyserMyException e){
+            throw new CensusAnalyserException(e.getMessage() , e.type);
+        } catch (RuntimeException e) {
+            if (e.getMessage().contains("header!"))
+                throw new CensusAnalyserException(e.getMessage(),
+                        CensusAnalyserMyException.ExceptionType.INVALID_FILE_HEADER);
+
+            throw new CensusAnalyserException(e.getMessage(),
+                    CensusAnalyserMyException.ExceptionType.INVALID_FILE_DATA);
+        }
     }
 
     public int loadIndiaStateCodeCensusData(String indiaStateCodeCsvFilePath) throws CensusAnalyserException {
@@ -35,8 +52,7 @@ public class CensusAnalyser {
             throw new CensusAnalyserException(e.getMessage(), CensusAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM);
         }catch (CensusAnalyserMyException e){
             throw new CensusAnalyserException(e.getMessage(),e.type);
-        }
-        catch (RuntimeException e) {
+        } catch (RuntimeException e) {
             if (e.getMessage().contains("header!"))
                 throw new CensusAnalyserException(e.getMessage(),
                         CensusAnalyserMyException.ExceptionType.INVALID_FILE_HEADER);
@@ -54,26 +70,11 @@ public class CensusAnalyser {
     }
 
      public String getStateWiseSortedData(String csvFilePath) throws CensusAnalyserException{
-         try (Reader reader = Files.newBufferedReader(Paths.get(csvFilePath))) {
-             CsvBuilderFactoryInterface csvBuilder = CsvBuilderFactory.getCsvBuilder();
-             List<IndiaCensusCSV> censusCSVList = csvBuilder.getCsvList(reader , IndiaCensusCSV.class);
-             //Comparator<IndiaCensusCSV> censusCSVComparator = Comparator.comparing(census -> census.state);
-             List sortedList = censusCSVList.stream().sorted().collect(Collectors.toList());
-             String SortedStateCensusJson = new Gson().toJson(sortedList);
-             return SortedStateCensusJson;
-         }catch (IOException e){
-             throw new CensusAnalyserException(e.getMessage(), CensusAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM);
-         }catch (CensusAnalyserMyException e){
-             throw new CensusAnalyserException(e.getMessage() , e.type);
-         }catch (RuntimeException e) {
-             if (e.getMessage().contains("header!"))
-                 throw new CensusAnalyserException(e.getMessage(),
-                         CensusAnalyserMyException.ExceptionType.INVALID_FILE_HEADER);
-
-             throw new CensusAnalyserException(e.getMessage(),
-                     CensusAnalyserMyException.ExceptionType.INVALID_FILE_DATA);
-         }
-
+        this.loadIndiaCensusData(csvFilePath);
+        List<IndiaCensusCSV> sortedList = this.censusCSVList.stream().sorted((csvData , csvData2) -> csvData.state.compareTo(csvData2.state))
+         .collect(Collectors.toList());
+         String sortedStateCensusJson = new Gson().toJson(sortedList);
+         return sortedStateCensusJson;
     }
 
 }

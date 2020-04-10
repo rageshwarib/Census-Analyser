@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="censusanalyser.CensusAnalyserTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2020-04-09T15:11:14" hostname="rageshwari" time="1.011">
+<testsuite name="censusanalyser.CensusAnalyserTest" tests="11" skipped="0" failures="0" errors="0" timestamp="2020-04-10T10:57:48" hostname="rageshwari" time="0.765">
   <properties/>
-  <testcase name="givenIndianCensusCSVFileReturnsCorrectRecords" classname="censusanalyser.CensusAnalyserTest" time="0.793"/>
-  <testcase name="givenIndiaCensusData_WithWrongDelimiter_ShouldThrowException" classname="censusanalyser.CensusAnalyserTest" time="0.081"/>
-  <testcase name="givenIndiaCensusData_WithWrongFileType_ShouldThrowException" classname="censusanalyser.CensusAnalyserTest" time="0.001"/>
-  <testcase name="givenIndiaCensusData_WithWrongHeader_ShouldThrowException" classname="censusanalyser.CensusAnalyserTest" time="0.118"/>
-  <testcase name="givenIndiaCensusData_WithWrongFile_ShouldThrowException" classname="censusanalyser.CensusAnalyserTest" time="0.015"/>
+  <testcase name="givenIndiaStateCodeData_WithWrongFileType_ShouldThrowException" classname="censusanalyser.CensusAnalyserTest" time="0.09"/>
+  <testcase name="givenIndiaCensusData_WhenSortedOnState_ShouldReturnSortResult" classname="censusanalyser.CensusAnalyserTest" time="0.097"/>
+  <testcase name="givenIndiaStateCodeData_WithWrongDelimiter_ShouldThrowException" classname="censusanalyser.CensusAnalyserTest" time="0.027"/>
+  <testcase name="givenIndianCensusCSVFileReturnsCorrectRecords" classname="censusanalyser.CensusAnalyserTest" time="0.357"/>
+  <testcase name="givenIndiaStateData_WithWrongFile_ShouldThrowException" classname="censusanalyser.CensusAnalyserTest" time="0.001"/>
+  <testcase name="givenIndiaCensusData_WithWrongDelimiter_ShouldThrowException" classname="censusanalyser.CensusAnalyserTest" time="0.019"/>
+  <testcase name="givenIndiaCensusData_WithWrongFileType_ShouldThrowException" classname="censusanalyser.CensusAnalyserTest" time="0.0"/>
+  <testcase name="givenIndianStateCodeCSVFileReturnsCorrectRecords" classname="censusanalyser.CensusAnalyserTest" time="0.164"/>
+  <testcase name="givenIndiaCensusData_WithWrongHeader_ShouldThrowException" classname="censusanalyser.CensusAnalyserTest" time="0.003"/>
+  <testcase name="givenIndiaCensusData_WithWrongFile_ShouldThrowException" classname="censusanalyser.CensusAnalyserTest" time="0.0"/>
+  <testcase name="givenIndiaStateCodeData_WithWrongHeader_ShouldThrowException" classname="censusanalyser.CensusAnalyserTest" time="0.005"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[Exception in thread "pool-2-thread-1" java.lang.RuntimeException: com.opencsv.exceptions.CsvRequiredFieldEmptyException: The following required fields were not present for one record of the input: areaInSqKm densityPerSqKm
 	at com.opencsv.bean.concurrent.ProcessCsvLine.run(ProcessCsvLine.java:91)
