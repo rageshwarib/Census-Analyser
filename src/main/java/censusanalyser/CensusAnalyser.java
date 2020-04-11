@@ -8,9 +8,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -18,6 +16,8 @@ import java.util.stream.StreamSupport;
 public class CensusAnalyser {
     List<IndiaCensusCSV> censusCSVStateList = new ArrayList<IndiaCensusCSV>();
     List<IndiaStateCodeCSV> censusCSVCodeList = new ArrayList<IndiaStateCodeCSV>();
+    Map<String, IndiaCensusCSV> censusData = new HashMap<>();
+    Map<String, IndiaStateCodeCSV> censusStateCodeData = new HashMap<>();
 
     public int loadIndiaCensusData(String csvFilePath) throws CensusAnalyserException {
        this.checkValidCSVFile(csvFilePath);
@@ -25,6 +25,7 @@ public class CensusAnalyser {
             CsvBuilderFactoryInterface csvBuilder = CsvBuilderFactory.getCsvBuilder();
 
             censusCSVStateList = csvBuilder.getCsvList(reader , IndiaCensusCSV.class);
+            this.CensusListconvertIntoMap(censusCSVStateList);
             return censusCSVStateList.size();
         }catch (IOException e){
             throw new CensusAnalyserException(e.getMessage(), CensusAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM);
@@ -39,7 +40,12 @@ public class CensusAnalyser {
                     CensusAnalyserMyException.ExceptionType.INVALID_FILE_DATA);
         }
     }
-
+    private void CensusListconvertIntoMap(List<IndiaCensusCSV> indiaCensusCSV){
+       indiaCensusCSV.stream().filter(data -> data != null).forEach(data -> this.censusData.put(data.state,data));
+    }
+    private void stateCodeListconvertIntoMap(List<IndiaStateCodeCSV> censusCSVCodeList){
+        censusCSVCodeList.stream().filter(data -> data != null).forEach(data -> this.censusStateCodeData.put(data.StateCode,data));
+    }
     public int loadIndiaStateCodeCensusData(String indiaStateCodeCsvFilePath) throws CensusAnalyserException {
 
         this.checkValidCSVFile(indiaStateCodeCsvFilePath);
@@ -47,12 +53,8 @@ public class CensusAnalyser {
             CsvBuilderFactoryInterface csvBuilder = CsvBuilderFactory.getCsvBuilder();
 
             censusCSVCodeList = csvBuilder.getCsvList(reader , IndiaStateCodeCSV.class);
+            this.stateCodeListconvertIntoMap(censusCSVCodeList);
             return censusCSVCodeList.size();
-          //  Iterator<IndiaStateCodeCSV> indiaStateCodeCSVIterator = csvBuilder.getIterator(reader , IndiaStateCodeCSV.class);
-           // int numOfEntries = 0;
-          //  Iterable<IndiaStateCodeCSV> indiaStateCodeCSVSIterable = () -> indiaStateCodeCSVIterator;
-          //  numOfEntries = (int) StreamSupport.stream(indiaStateCodeCSVSIterable.spliterator(), false).count();
-           // return numOfEntries;
         }catch (IOException e){
             throw new CensusAnalyserException(e.getMessage(), CensusAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM);
         }catch (CensusAnalyserMyException e){
@@ -76,16 +78,16 @@ public class CensusAnalyser {
 
      public String getStateWiseSortedData(String csvFilePath) throws CensusAnalyserException{
         this.loadIndiaCensusData(csvFilePath);
-        List<IndiaCensusCSV> sortedList = this.censusCSVStateList.stream().sorted((csvData , csvData2) -> csvData.state.compareTo(csvData2.state))
-                                           .collect(Collectors.toList());
+        List<IndiaCensusCSV> sortedList = this.censusData.values().stream().
+                sorted((csvData1 , csvData2) -> csvData1.state.compareTo(csvData2.state)).collect(Collectors.toList());
          String sortedStateCensusJson = new Gson().toJson(sortedList);
          return sortedStateCensusJson;
     }
 
-    public String getCodeWiseSortedData(String indiaStateCodeCsvFilePath) throws CensusAnalyserException {
+    public String getCodeWiseSortedData(String indiaStateCodeCsvFilePath ) throws CensusAnalyserException {
         this.loadIndiaStateCodeCensusData(indiaStateCodeCsvFilePath);
-        List<IndiaStateCodeCSV> sortedList = this.censusCSVCodeList.stream().sorted((csvData , csvData2) -> csvData.StateCode.compareTo(csvData2.StateCode))
-                .collect(Collectors.toList());
+        List<IndiaStateCodeCSV> sortedList = this.censusStateCodeData.values().stream().
+                sorted((csvData , csvData2) -> csvData.StateCode.compareTo(csvData2.StateCode)).collect(Collectors.toList());
         String sortedStateCodeCensusJson = new Gson().toJson(sortedList);
         return sortedStateCodeCensusJson;
     }
