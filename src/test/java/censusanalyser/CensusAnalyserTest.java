@@ -129,7 +129,8 @@ public class CensusAnalyserTest {
             String sortedCensusData = censusAnalyser.getStateWiseSortedData(INDIA_CENSUS_CSV_FILE_PATH);
            System.out.println(sortedCensusData);
            IndiaCensusCSV[] indiaCensusCSV = new Gson().fromJson(sortedCensusData, IndiaCensusCSV[].class);
-            Assert.assertEquals("Uttarakhand", indiaCensusCSV[0].state);
+           //Soting based on DensityPerSqKm
+           Assert.assertEquals("West Bengal", indiaCensusCSV[0].state);
         }catch (CensusAnalyserException e){ }
     }
     @Test
