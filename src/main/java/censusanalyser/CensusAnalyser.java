@@ -40,9 +40,26 @@ public class CensusAnalyser {
                     CensusAnalyserMyException.ExceptionType.INVALID_FILE_DATA);
         }
     }
-    private void CensusListconvertIntoMap(List<IndiaCensusCSV> indiaCensusCSV){
-        indiaCensusCSV.stream().filter(data -> data !=null).
-                forEach(data -> this.censusData.put(data.areaInSqKm,new IndiaCensusDAO(data)));
+    public int loadUSCencusData(String USCsvFilePath) throws CensusAnalyserException{
+        try (Reader reader = Files.newBufferedReader(Paths.get(USCsvFilePath))) {
+            CsvBuilderFactoryInterface csvBuilder = CsvBuilderFactory.getCsvBuilder();
+
+            List<USCensusCSV> usCensusCSVList = new ArrayList<USCensusCSV>();
+            usCensusCSVList = csvBuilder.getCsvList(reader , IndiaCensusCSV.class);
+           // this.CensusListconvertIntoMap(usCensusCSVList);
+            return usCensusCSVList.size();
+        }catch (IOException e){
+            throw new CensusAnalyserException(e.getMessage(), CensusAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM);
+        }catch (CensusAnalyserMyException e){
+            throw new CensusAnalyserException(e.getMessage() , e.type);
+        } catch (RuntimeException e) {
+            if (e.getMessage().contains("header!"))
+                throw new CensusAnalyserException(e.getMessage(),
+                        CensusAnalyserMyException.ExceptionType.INVALID_FILE_HEADER);
+
+            throw new CensusAnalyserException(e.getMessage(),
+                    CensusAnalyserMyException.ExceptionType.INVALID_FILE_DATA);
+        }
     }
 
     public int loadIndiaStateCodeCensusData(String indiaStateCodeCsvFilePath) throws CensusAnalyserException {
@@ -67,6 +84,10 @@ public class CensusAnalyser {
                     CensusAnalyserMyException.ExceptionType.INVALID_FILE_DATA);
         }
     }
+    private void CensusListconvertIntoMap(List<IndiaCensusCSV> indiaCensusCSV){
+        indiaCensusCSV.stream().filter(data -> data !=null).
+                forEach(data -> this.censusData.put(data.areaInSqKm,new IndiaCensusDAO(data)));
+    }
 
     private void stateCodeListconvertIntoMap(List<IndiaStateCodeCSV> censusCSVCodeList){
         censusCSVCodeList.stream().filter(data -> data != null).
@@ -81,7 +102,7 @@ public class CensusAnalyser {
      public String getStateWiseSortedData(String csvFilePath) throws CensusAnalyserException{
         this.loadIndiaCensusData(csvFilePath);
         List<IndiaCensusDAO> sortedList = this.censusData.values().stream().
-                sorted((csvData1 , csvData2) -> csvData1.areaInSqKm.compareTo(csvData2.areaInSqKm)).collect(Collectors.toList());
+                sorted((csvData1 , csvData2) -> csvData1.totalArea.compareTo(csvData2.totalArea)).collect(Collectors.toList());
          String sortedStateCensusJson = new Gson().toJson(sortedList);
          return sortedStateCensusJson;
     }
@@ -93,5 +114,7 @@ public class CensusAnalyser {
         String sortedStateCodeCensusJson = new Gson().toJson(sortedList);
         return sortedStateCodeCensusJson;
     }
+
+
 }
 

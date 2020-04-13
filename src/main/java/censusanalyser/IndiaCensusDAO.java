@@ -3,23 +3,23 @@ package censusanalyser;
 public class IndiaCensusDAO {
     public String state;
     public String population;
-    public String areaInSqKm;
-    public String densityPerSqKm;
-    public String SrNo;
-    public String StateName;
-    public String TIN;
+    public String totalArea;
+    public String populationDensity;
     public String StateCode;
 
     public IndiaCensusDAO(IndiaCensusCSV indiaCensusCSV){
         state = indiaCensusCSV.state;
         population = indiaCensusCSV.population;
-        areaInSqKm = indiaCensusCSV.areaInSqKm;
-        densityPerSqKm = indiaCensusCSV.densityPerSqKm;
+        totalArea = indiaCensusCSV.areaInSqKm;
+        populationDensity = indiaCensusCSV.densityPerSqKm;
     }
     public IndiaCensusDAO(IndiaStateCodeCSV indiaStateCodeCSV){
-        SrNo = indiaStateCodeCSV.SrNo;
-        StateName = indiaStateCodeCSV.StateCode;
-        TIN = indiaStateCodeCSV.TIN;
         StateCode = indiaStateCodeCSV.StateCode;
+    }
+    public IndiaCensusDAO(USCensusCSV usCensusCSV){
+        state = usCensusCSV.state;
+        StateCode = usCensusCSV.stateId;
+        population = usCensusCSV.population;
+
     }
 }
