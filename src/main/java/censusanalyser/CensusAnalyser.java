@@ -42,7 +42,7 @@ public class CensusAnalyser {
     }
     private void CensusListconvertIntoMap(List<IndiaCensusCSV> indiaCensusCSV){
         indiaCensusCSV.stream().filter(data -> data !=null).
-                forEach(data -> this.censusData.put(data.state,new IndiaCensusDAO(data)));
+                forEach(data -> this.censusData.put(data.population,new IndiaCensusDAO(data)));
     }
 
     public int loadIndiaStateCodeCensusData(String indiaStateCodeCsvFilePath) throws CensusAnalyserException {
@@ -81,7 +81,7 @@ public class CensusAnalyser {
      public String getStateWiseSortedData(String csvFilePath) throws CensusAnalyserException{
         this.loadIndiaCensusData(csvFilePath);
         List<IndiaCensusDAO> sortedList = this.censusData.values().stream().
-                sorted((csvData1 , csvData2) -> csvData1.state.compareTo(csvData2.state)).collect(Collectors.toList());
+                sorted((csvData1 , csvData2) -> csvData1.population.compareTo(csvData2.population)).collect(Collectors.toList());
          String sortedStateCensusJson = new Gson().toJson(sortedList);
          return sortedStateCensusJson;
     }
