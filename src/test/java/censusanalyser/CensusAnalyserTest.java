@@ -167,5 +167,15 @@ public class CensusAnalyserTest {
             Assert.assertEquals(51, censusDataCount);
         } catch (CensusAnalyserException e) { }
     }
+    @Test
+    public void givenUSCensusData_WhenSortedOnState_shouldReturnSortResult() {
+        try {
+            CensusAnalyser censusAnalyser = new CensusAnalyser();
+            String sortedCensusData = censusAnalyser.getUSSortedData(US_CENSUS_CSV_FILE_PATH);
+            System.out.println(sortedCensusData);
+            USCensusCSV[] usCensusCSV = new Gson().fromJson(sortedCensusData, USCensusCSV[].class);
+            Assert.assertEquals("1052567",usCensusCSV[0].population);
+        } catch (CensusAnalyserException e) { }
+    }
 }
 
